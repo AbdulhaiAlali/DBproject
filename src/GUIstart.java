@@ -2,6 +2,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
     /**
      * Menu class implemnts Action Listener .
@@ -119,7 +120,9 @@ public void actionPerformed(ActionEvent e){
 
     if(e.getSource()==neworder){
      window.dispose();
-     GUImenu GUImenu = new GUImenu();}
+            ArrayList pizzas = new ArrayList();
+
+     GUImenu GUImenu = new GUImenu(pizzas);}
 
     /**
      *  If myorders button clicked create new GUImyOrders class.
@@ -128,7 +131,8 @@ public void actionPerformed(ActionEvent e){
 
     if(e.getSource()==myorders){
      window.dispose();
-     GUImyOrders GUImyOrders = new GUImyOrders();}
+     GUImyOrders GUImyOrders = new GUImyOrders();
+     }
     /**
      *  If exit clicked close the frame.
      *  Dispose the current frame.
