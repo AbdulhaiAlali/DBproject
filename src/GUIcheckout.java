@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
     /**
-     * Menu class implemnts Action Listener .
+     * GUIcheckout class implemnts Action Listener .
      */
 
 public class GUIcheckout implements ActionListener  {
@@ -43,6 +43,7 @@ public class GUIcheckout implements ActionListener  {
     DBmaper DBmaper1 = null;
 		double amount =0;
 
+
    // private static DecimalFormat df2 = new DecimalFormat("#.##");
 
 public GUIcheckout(ArrayList pizzas , ArrayList drinks,ArrayList deserts) {
@@ -50,6 +51,11 @@ public GUIcheckout(ArrayList pizzas , ArrayList drinks,ArrayList deserts) {
 	this.pizzas=pizzas;
   	this.drinks=drinks;
 	this.deserts=deserts;
+
+
+
+
+
 	try {
 		DBmaper1 = new DBmaper();
 	} catch (SQLException e2) {
@@ -58,7 +64,7 @@ public GUIcheckout(ArrayList pizzas , ArrayList drinks,ArrayList deserts) {
 	}
 	try {
 		amount = DBmaper1.countAmountTOpay(pizzas,drinks,deserts);
-    	totalTOpay.setText(String.format("%.2f",amount)+"$");
+    	totalTOpay.setText(String.format("%.2f",amount));
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -156,10 +162,11 @@ public void actionPerformed(ActionEvent e){
      String adress = customerAdress.getText();
      String phoneNumberStr = customerPhone.getText();
      int phoneNumber = 0;
+     double totalTOpayint=0;
 	     	 
      try{
      	 phoneNumber = Integer.parseInt(phoneNumberStr);
-
+     	 totalTOpayint = Double.parseDouble(totalTOpay.getText());
      }
      catch(NumberFormatException ex){
      	ex.printStackTrace();
@@ -190,7 +197,7 @@ public void actionPerformed(ActionEvent e){
     		JOptionPane.showMessageDialog(checkCode,validornot);
     		if (validornot.equals("VALID")) {
     			 amount = amount-((amount*10)/100);
-    			totalTOpay.setText(String.format("%.2f",amount)+"$");
+    			totalTOpay.setText(String.format("%.2f",amount));
     		}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -206,17 +213,29 @@ public void actionPerformed(ActionEvent e){
 	//SELECTING THE TOPPING 
 
     if(e.getSource()==pay){
-
+    	
+    	int orderKey=0;
 		try {
 			int customerID = DBmaper.insertCustomer(phoneNumber,name,adress,postcode,pizzas.size());
     		JOptionPane.showMessageDialog(pay,DBmaper.checkCustomerPizzasNumber(customerID) );
+
+    		 orderKey = DBmaper.insertOrder(customerID,totalTOpayint,postcode);
+    		DBmaper.InsertPizzaOrder(orderKey,pizzas);
+
+    		if (!drinks.isEmpty()) {
+    			DBmaper.InsertDrinkOrder(orderKey,drinks);
+    		}
+    		if (!deserts.isEmpty()) {
+    			DBmaper.InsertDessertOrder(orderKey,deserts);
+    		}
+		
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
     	window.dispose();
-    	GUImyOrders GUImyOrders = new GUImyOrders();
+    	GUImyOrders GUImyOrders = new GUImyOrders(orderKey);
 
  }
 

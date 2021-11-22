@@ -79,9 +79,11 @@ public class GUImenu implements ActionListener  {
     ArrayList drinkss = new ArrayList();
     ArrayList desertss = new ArrayList();
 
-public GUImenu(ArrayList pizzas) {
+public GUImenu(ArrayList pizzas,ArrayList drinkss,ArrayList desertss) {
 
 	this.pizzas = pizzas;
+	this.drinkss =drinkss;
+	this.desertss = desertss;
 
 
 	products.addItem("Meat Pizzas");
@@ -292,6 +294,12 @@ public void actionPerformed(ActionEvent e){
      window.dispose();
      GUIcheckout GUIcheckout = new GUIcheckout(pizzas,drinkss,desertss);
  }
+    if(e.getSource()==checkout && pizzas.isEmpty()){
+     JOptionPane.showMessageDialog(checkout,"Order At Least 1 Pizza" );
+ }
+
+
+
 
      String selected = (String) products.getSelectedItem();
 
@@ -334,13 +342,14 @@ public void actionPerformed(ActionEvent e){
 		butText = btn.getText();
 		System.out.println(butText);
 		     window.dispose();
-     GUIToppings GUIToppings = new GUIToppings(butText,pizzas);
+     GUIToppings GUIToppings = new GUIToppings(butText,pizzas,drinkss,desertss);
 	}
  	if(source instanceof JButton && selected=="Drinks" ) {
 		JButton btn = (JButton)source;
 		String textBtn = btn.getText();
 		System.out.println(textBtn);
 		drinkss.add(textBtn);
+
 	}  
  	if(source instanceof JButton && selected=="Desserts" ) {
 		JButton btn = (JButton)source;

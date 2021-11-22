@@ -2,13 +2,17 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.*;
+import java.text.*;
 
     /**
      * Menu class implemnts Action Listener .
      */
 
 public class GUIstart implements ActionListener  {
+
+
 
     /**
      * Creating new Frame (window)
@@ -41,7 +45,6 @@ public class GUIstart implements ActionListener  {
     Color color1 = new Color(189,228,247);
 
 public GUIstart() {
-
 
    /**
     * Implement the neworder button. set the bounds,the background color,the border and add the actionlistener
@@ -121,8 +124,10 @@ public void actionPerformed(ActionEvent e){
     if(e.getSource()==neworder){
      window.dispose();
             ArrayList pizzas = new ArrayList();
+            ArrayList drinks = new ArrayList();
+            ArrayList desserts = new ArrayList();
 
-     GUImenu GUImenu = new GUImenu(pizzas);}
+     GUImenu GUImenu = new GUImenu(pizzas,drinks,desserts);}
 
     /**
      *  If myorders button clicked create new GUImyOrders class.
@@ -131,7 +136,23 @@ public void actionPerformed(ActionEvent e){
 
     if(e.getSource()==myorders){
      window.dispose();
-     GUImyOrders GUImyOrders = new GUImyOrders();
+
+    DBmaper DBmaper1 = null;
+    int lastOrder=0;
+    try {
+        DBmaper1 = new DBmaper();
+    } catch (SQLException e2) {
+        // TODO Auto-generated catch block
+        e2.printStackTrace();
+    }
+    try {
+         lastOrder = DBmaper1.getLastOrder();
+        } catch (SQLException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+     GUImyOrders GUImyOrders = new GUImyOrders(lastOrder);
      }
     /**
      *  If exit clicked close the frame.
@@ -146,7 +167,5 @@ public void actionPerformed(ActionEvent e){
 
 
 }
-    public static void main(String[] args) {
-        GUIstart GUIstart = new GUIstart();
-    }
+
 }

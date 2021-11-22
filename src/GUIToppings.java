@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
     /**
-     * Menu class implemnts Action Listener .
+     * GUIToppings class implemnts Action Listener .
      */
 
 public class GUIToppings implements ActionListener  {
@@ -47,64 +47,69 @@ public class GUIToppings implements ActionListener  {
     boolean clicked = false;
 
     String selectedTopping="s";
+    ArrayList drinkss = new ArrayList();
+    ArrayList desertss = new ArrayList();
 
     ArrayList pizzas = new ArrayList();
     String pizza = "";
 
-public GUIToppings(String pizza , ArrayList pizzas) {
+public GUIToppings(String pizza , ArrayList pizzas , ArrayList drinkss , ArrayList desertss) {
 
 	this.pizza=pizza;
 	this.pizzas=pizzas;
+	this.drinkss =drinkss;
+	this.desertss = desertss;
+
    /**
     * Implement the buttonS. set the bounds,the background color,the border and add the actionlistener
     */
 
-    mushroom.setBounds(100,200,230,45);
+    mushroom.setBounds(50,200,120,45);
     mushroom.addActionListener(this);
 	mushroom.setBackground(color1);
 	mushroom.setBorder(BorderFactory.createBevelBorder(1, Color.black , Color.black , Color.red , Color.black));
 
-    salami.setBounds(100,275,230,45);
+    salami.setBounds(50,275,120,45);
     salami.addActionListener(this);
 	salami.setBackground(color1);
 	salami.setBorder(BorderFactory.createBevelBorder(1, Color.black , Color.black , Color.red , Color.black));
 
-    pineapple.setBounds(100,350,230,45);
+    pineapple.setBounds(50,350,120,45);
     pineapple.addActionListener(this);
 	pineapple.setBackground(color1);
 	pineapple.setBorder(BorderFactory.createBevelBorder(1, Color.black , Color.black , Color.red , Color.black));
 
-    union.setBounds(100,425,230,45);
+    union.setBounds(50,425,120,45);
     union.addActionListener(this);
 	union.setBackground(color1);
 	union.setBorder(BorderFactory.createBevelBorder(1, Color.black , Color.black , Color.red , Color.black));
 
-    potato.setBounds(100,500,230,45);
+    potato.setBounds(50,500,120,45);
     potato.addActionListener(this);
 	potato.setBackground(color1);
 	potato.setBorder(BorderFactory.createBevelBorder(1, Color.black , Color.black , Color.red , Color.black));
 
-    cheese.setBounds(480,200,230,45);
+    cheese.setBounds(620,200,120,45);
     cheese.addActionListener(this);
 	cheese.setBackground(color1);
 	cheese.setBorder(BorderFactory.createBevelBorder(1, Color.black , Color.black , Color.red , Color.black));
 
-    garlic.setBounds(480,275,230,45);
+    garlic.setBounds(620,275,120,45);
     garlic.addActionListener(this);
 	garlic.setBackground(color1);
 	garlic.setBorder(BorderFactory.createBevelBorder(1, Color.black , Color.black , Color.red , Color.black));
 
-    chicken.setBounds(480,350,230,45);
+    chicken.setBounds(620,350,120,45);
     chicken.addActionListener(this);
 	chicken.setBackground(color1);
 	chicken.setBorder(BorderFactory.createBevelBorder(1, Color.black , Color.black , Color.red , Color.black));
 
-    tomatoes.setBounds(480,425,230,45);
+    tomatoes.setBounds(620,425,120,45);
     tomatoes.addActionListener(this);
 	tomatoes.setBackground(color1);
 	tomatoes.setBorder(BorderFactory.createBevelBorder(1, Color.black , Color.black , Color.red , Color.black));
 
-    redpepper.setBounds(480,500,230,45);
+    redpepper.setBounds(620,500,120,45);
     redpepper.addActionListener(this);
 	redpepper.setBackground(color1);
 	redpepper.setBorder(BorderFactory.createBevelBorder(1, Color.black , Color.black , Color.red , Color.black));
@@ -165,10 +170,7 @@ public boolean clicked(){
 @Override
 public void actionPerformed(ActionEvent e){
 
-    /**
-     *  If neworder button clicked create new GUImenu class.
-     *  Dispose the current frame.
-     */
+ 
 
     DBmaper DBmaper = null;
 	try {
@@ -188,7 +190,6 @@ public void actionPerformed(ActionEvent e){
     if(source instanceof JButton){
 		JButton btn = (JButton)source;
 		butText = btn.getText();
-    	int newpizz;
 		try {
 			pizzas.add(DBmaper.insertPizza(pizza,butText,1));
 		} catch (SQLException e1) {
@@ -197,7 +198,7 @@ public void actionPerformed(ActionEvent e){
 		}
     	     window.dispose();
 
-    	GUImenu GUImenu = new GUImenu(pizzas);
+    	GUImenu GUImenu = new GUImenu(pizzas,drinkss,desertss);
 
  }
 
